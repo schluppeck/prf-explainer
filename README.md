@@ -2,7 +2,20 @@
 
 Interactive (matlab) code illustrating the population receptive field mapping technique (Dumoulin &amp; Wandell)
 
+
+In short - how do you get from stimulus description and pRF (left 2 images), to a model fit (right)?
+
+<center>
+<img src="./stim-image.png" height="120px"><img src="./prf-model.png" height="120px"><img src="./model-fit.png" height="120px">
+
+
+
+</center>
+
+
 ## To get going
+
+This walk-through is written as an [live script in Matlab](https://uk.mathworks.com/help/matlab/matlab_prog/what-is-a-live-script-or-function.html),which is The Mathworks's answer to the "literate coding" idea.
 
 1. ``git clone`` this repository (assuming macOS). Use Windows magic to achieve the same:
 ```bash
