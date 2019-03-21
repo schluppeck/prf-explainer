@@ -3,7 +3,7 @@
 Interactive (matlab) code illustrating the population receptive field mapping technique (Dumoulin &amp; Wandell)
 
 
-In short - how do you get from stimulus description and pRF (left 2 images), to a model fit (right)?
+In short - how do you get from stimulus description and pRF (top 2 images), to a model fit (bottom)?
 
 <center>
 <img src="./stim-image.png" width="50%"/><img src="./prf-model.png" width="50%"/><img src="./model-fit.png" height=width="50%"/>
