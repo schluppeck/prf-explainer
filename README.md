@@ -6,7 +6,7 @@ Interactive (matlab) code illustrating the population receptive field mapping te
 In short - how do you get from stimulus description and pRF (left 2 images), to a model fit (right)?
 
 <center>
-<img src="./stim-image.png" height="120px"/><img src="./prf-model.png" height="120px"/><img src="./model-fit.png" height="120px"/>
+<img src="./stim-image.png" width="50%"/><img src="./prf-model.png" width="50%"/><img src="./model-fit.png" height=width="50%"/>
 </center>
 
 
