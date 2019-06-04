@@ -31,6 +31,11 @@ open('pRFfittingExample')
 <img src="./screenshot.png" width="70%">
 </center>
 
+## Lee method
+
+- todo @anthonyBeh: try to implement the lee et al method using L2/L1 regularised pRF
+
+
 ## Notes and references
 
 Tested with MATLAB Version: 9.4.0.813654 (R2018a) on macOS. If you find errors, typos, better ways of doing things, submit and issue on the github repo.
