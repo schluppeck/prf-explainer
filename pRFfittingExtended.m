@@ -203,14 +203,52 @@ ylabel('Visual space (y)');
 %
 % R is measured, K is defined above, desired: best **b**
 
-K = estimate_prf_linear_transform(pRFStimImage,hrf);
+[K, H] = estimate_prf_linear_transform(pRFStimImage,hrf);
 
+%% figure that shows convolution matrix 
+figure
+imagesc(H)
+axis image
+set(gca, 'xaxislocation','top')
+
+
+%% figure - for lab meeting / talk.
+figure
+imagesc(H(1:10, 1:30))
+axis image
+set(gca, 'xaxislocation','top')
+title('First 10 rows of H matrix')
+
+
+%% illustration about convolution
+%
+% + reality check that convolution matrix produces the correct thing
+
+T = zeros(168,1);
+T([1,10, 12, 100]) = 1;
+
+exampleSignal = H * T;
+
+figure
+subplot(2,1,1)
+stem(T,'r.')
+axis([0 inf, 0, 1.2])
+title('T')
+
+subplot(2,1,2)
+plot(exampleSignal)
+title('H*T')
+
+
+%%
 % make sure random seeds is is set; make reproducible 
 rng(42)
 
 tic
+Bpinv = pinv(K)*tSeries;
+
 Blasso = fitrlinear(K, tSeries, 'Regularization', 'lasso' );
-Bridge =  fitrlinear(K, tSeries, 'Regularization', 'ridge' );
+Bridge = fitrlinear(K, tSeries, 'Regularization', 'ridge' );
 Brsvm =  fitrsvm(K, tSeries);
 toc
 
@@ -218,6 +256,7 @@ toc
 
 reshape_estimate = @(x) reshape(x, size(mx));
 
+estimatedPRFpinv = reshape_estimate(Bpinv); % as per lee paper
 estimatedPRFlasso = reshape_estimate(Blasso.Beta);
 estimatedPRFridge = reshape_estimate(Bridge.Beta);
 estimatedPRFsvm = reshape_estimate(Brsvm.Beta);
@@ -266,7 +305,6 @@ formatPlot()
 
 %%
 
-
 figure
 
 dataZ = zscore(tSeries);
@@ -287,11 +325,12 @@ legend(p_, {'data', 'direct fit'})
 % The residuals are simply the difference between model and data:
 subplot(2,1,2)
 p2_ = plot(stimImage.t, dataZ, 'k-', ...
+    stimImage.t, directFitZ , 'r-', ...
     stimImage.t, lassoZ, 'm', ...
-    stimImage.t, ridgeZ, 'r', ...
+    stimImage.t, ridgeZ, 'c', ...
     stimImage.t, svmZ, 'b');
 set(p2_, 'LineWidth',2);
-legend(p2_, {'data',  'lasso', 'ridge', 'svm'})
+legend(p2_, {'data', 'directFit', 'lasso', 'ridge', 'svm'})
 
 
 %% cross-validation !
