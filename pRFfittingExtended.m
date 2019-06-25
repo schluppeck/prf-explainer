@@ -135,15 +135,16 @@ load('tSeries_10_31_18.mat', 'tSeries')
 % easy to understand & teach way is to use |lsqnonlin().| Adapting the example 
 % in the help for that function:
 
-%%
-ydata = tSeries;             % example ydata     
-p0 = [-3.0, -3.0, 1.0, 10000]; % starting vals
-fitFunc = @(p) calculate_with_p(p) - ydata;
-lb = [-inf, -inf, 0, 1];
-ub = +inf(1,4);
+%% direct fit method
 
-pHat = lsqnonlin(fitFunc, p0, lb, ub);
-pHat'
+ydata = tSeries;               % example ydata     
+p0 = [-3.0, -3.0, 1.0, 10000]; % starting vals
+fitFunc = @(p) calculate_with_p(p) - ydata; % objective function (returns a vector of [signed] residuals)
+lb = [-inf, -inf, 0, 1];       % lower bound of params (for lsqnonlin)
+ub = +inf(1,4);                % upper bound
+
+pHat = lsqnonlin(fitFunc, p0, lb, ub);  % do the minimisation
+pHat' 
 
 %% 
 % Now feed those parameters back into our function to see what the best 
@@ -206,13 +207,14 @@ ylabel('Visual space (y)');
 [K, H] = estimate_prf_linear_transform(pRFStimImage,hrf);
 
 %% figure that shows convolution matrix 
+
 figure
 imagesc(H)
 axis image
 set(gca, 'xaxislocation','top')
 
+%% figure - for lab meeting / talk - detail of conv matrix
 
-%% figure - for lab meeting / talk.
 figure
 imagesc(H(1:10, 1:30))
 axis image
@@ -220,24 +222,30 @@ set(gca, 'xaxislocation','top')
 title('First 10 rows of H matrix')
 
 
-%% illustration about convolution
+%% illustration of convolution
 %
 % + reality check that convolution matrix produces the correct thing
 
-T = zeros(168,1);
-T([1,10, 12, 100]) = 1;
+T = zeros(168,1);  % make a signal vector (0 to start off)
+T([1,10, 12, 100]) = 1;  % place some impulses at these locations.
 
-exampleSignal = H * T;
+exampleSignal = H * T;   % convolution as matrix multiply
+exampleSignalFaster = conv(T, hrf); % normally, use CONV!
+% but then chop to be same length!
+exampleSignalFaster = exampleSignalFaster(1:numel(T));
 
 figure
 subplot(2,1,1)
 stem(T,'r.')
 axis([0 inf, 0, 1.2])
-title('T')
+title('T - impulses [input]')
 
 subplot(2,1,2)
-plot(exampleSignal)
-title('H*T')
+plot(exampleSignal,'r-')
+hold on
+plot(exampleSignalFaster, 'k.' )
+legend({'by matrix multiply', 'using CONV'})
+title('H*T - convolution with HRF [output]')
 
 
 %%
@@ -256,15 +264,15 @@ toc
 
 reshape_estimate = @(x) reshape(x, size(mx));
 
-estimatedPRFpinv = reshape_estimate(Bpinv); % as per lee paper
+% now turn the 1d representations back into the shape of stimulus space
+estimatedPRFpinv = reshape_estimate(Bpinv); % as per lee paper (which says this doesn't work. !)
 estimatedPRFlasso = reshape_estimate(Blasso.Beta);
 estimatedPRFridge = reshape_estimate(Bridge.Beta);
 estimatedPRFsvm = reshape_estimate(Brsvm.Beta);
 
 
-
 %% and now use to calculate model prediction by 
-%  substituting back in
+%  substituting back in to the model
 
 lassoOut = calculate_prf_response(stimImage,...
     estimatedPRFlasso, 'reshape', hrf);
@@ -283,27 +291,31 @@ signForLasso = sign( corr(lassoOut, tSeriesHat) );
 signForRidge = sign( corr(ridgeOut, tSeriesHat) );
 signForSVM = sign( corr(svmOut, tSeriesHat) );
 
-% display
+%% display
 figure
 subplot(4,1,1)
 imagesc(x,y,permute(1.0 .* pRFhat, [2 1]))
 formatPlot()
+title('direct fit')
 
 subplot(4,1,2)
 imagesc(x,y,permute(signForLasso .* estimatedPRFlasso, [2,1]))
 formatPlot()
+title('lasso')
 
 subplot(4,1,3)
 imagesc(x,y,permute(signForRidge .* estimatedPRFridge, [2,1]))
 formatPlot()
+title('ridge regression')
 
 
 subplot(4,1,4)
 imagesc(x,y,permute(signForSVM .* estimatedPRFsvm, [2,1]))
 formatPlot()
+title('svm regression')
 
 
-%%
+%% display model fits
 
 figure
 
@@ -335,22 +347,9 @@ legend(p2_, {'data', 'directFit', 'lasso', 'ridge', 'svm'})
 
 %% cross-validation !
 %
-%
-% if fitrlinear is run with 'crossvalidation' the the object that gets
-% returned in a bit more complicated.
-
-% if strcmpi(class(Blasso), 'classreg.learning.partition.RegressionPartitionedLinear')
-%     % cross-validated
-%     estimatedPRFlasso = reshape(Blasso.Trained{10}.Beta, size(mx));
-%     
-%     mse = kfoldLoss(Blasso);
-%     
-% else
-%     %one shot
-%     estimatedPRFlasso = reshape(Blasso.Beta, size(mx));
-%     
-% end
-
+% @TODO... in order to pick good level of regularisation (and to avoid
+% over-fitting), can use cross-validation approach. this is provided in
+% |fitrlinear()| with different schemes for CV folds, etc.
 
 
 %% Notes and references
