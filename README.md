@@ -33,15 +33,15 @@ open('pRFfittingExample')
 
 ## Lee method
 
-- todo @anthonyBeh: try to implement the lee et al method using L2/L1 regularised pRF
+- Check out branches in this repo to see how `lee et al` method using L2/L1 regularised pRF was added.
 
 
 ## Notes and references
 
 Tested with MATLAB Version: 9.4.0.813654 (R2018a) on macOS. If you find errors, typos, better ways of doing things, submit and issue on the github repo.
 
-- Serge Dumoulin's homepage (original paper, software) – http://www.spinozacentre.nl/dumoulin/
-- Brian Wandell's homepage – https://web.stanford.edu/group/vista/cgi-bin/wandell/
-- Justin Gardner's homepage – http://gru.stanford.edu/doku.php/shared/home
-http://gru.stanford.edu/doku.php/mrTools/tutorialsprf – mrTools implementation (and tutorial for how to use)
-- my *Data Analysis for Neuroimaging* lab / teaching materials are hosted here: https://schluppeck.github.io/dafni/
+- [Serge Dumoulin's homepage (original paper, software)](http://www.spinozacentre.nl/dumoulin/)
+- [Brian Wandell's homepage](https://web.stanford.edu/group/vista/cgi-bin/wandell/)
+- [Justin Gardner's homepage](http://gru.stanford.edu/doku.php/shared/home)
+- [mrTools implementation (and tutorial for how to use)](http://gru.stanford.edu/doku.php/mrTools/tutorialsprf)
+- my *Data Analysis for Neuroimaging* lab / teaching materials are hosted here: [https://schluppeck.github.io/dafni/](https://schluppeck.github.io/dafni/)
