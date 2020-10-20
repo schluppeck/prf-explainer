@@ -129,7 +129,7 @@ ub = [+30.0, +30.0, 8.0, +Inf]
                          autodiff=:forward,
                          lower=lb,
                          upper=ub)
-res.converged ? println("✓ lmfit converged...") :  println("\:x:k lmfit didn't converge...")                       
+res.converged ? println("✓ lmfit converged...") :  println("X lmfit didn't converge...")                       
 
 # 2b. ELABORATED VERSION / using gradient w/ autodiff
 #
@@ -193,4 +193,6 @@ savefig(perror_, "fig-prf-tc+boot-plot.png") # really best to use SVG/PDF
 # plot(xₜ, yₜ, 0, 2π, leg=false, fill=(0, :orange),        xlim=(-15, +15), ylim=(-15, +15), aspect_ratio=1)
 
 # https://stackoverflow.com/a/56174228/4961292 
+
+## display
 
