@@ -25,4 +25,8 @@ Then you can try running the code (!NB data files are in parent dir for now (whe
 ```julia
 include("pRF_nls.jl")
 # and hopefully figures will pop up
+# if not, try
+pboot_  # figure handle
+# and
+hm_
 ```
