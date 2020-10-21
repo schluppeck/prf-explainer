@@ -9,6 +9,7 @@
 using NIfTI, MAT 
 using Plots
 using Colors
+using Images # mosaicview
 using LinearAlgebra
 using ImageFiltering # convolution (more choice in algos)
 using StatsBase # mean, etc
@@ -16,7 +17,7 @@ using Distributions # Normal, for quick bootstrapping
 using LsqFit # curve_fit lmfit
 
 # helper functions
-include("prf_nls_helpers.jl")
+include("pRF_nls_helpers.jl")
 
 # set gr backend for plotting
 gr() 
@@ -34,6 +35,10 @@ stimImage = matread(stim_image_file)["pRFStimImage"]
 img = permutedims(stimImage["im"], (2, 1, 3));
 heatmap(img[:,:,39],c=:hot)
 
+## make a montage of stim image
+stimim_ = heatmap(mosaicview(img[:,:,1:5:end]; ncol=6, npad=3, fillvalue=1, rowmajor=true), c=:grays, yflip=true, aspect_ratio=1)
+xaxis!(showaxis=:hide, title="Stimulus image moasic", xlabel="frames _across_ then down")
+savefig(stimim_, "fig-stim-image.png")
 # vectors / extent of x, y 
 x = stimImage["x"][:,1,1];
 y = stimImage["y"][1,:,1];
@@ -180,7 +185,7 @@ println("get a 1000 boostrap replicates of timeseries")
 pboot_ = plot(t, boots, la=0.1, c=:gray, label="")
 plot!(t, ts, c=:black, lw=2, label="", title="Boostrapped error bars, pHat, 1000 boostraps ")
 plot!(t, calcFit(res.param), c=:red, lw=2, label="NLS fit")
-savefig(perror_, "fig-prf-tc+boot-plot.png") # really best to use SVG/PDF
+savefig(pboot_, "fig-prf-tc+boot-plot.png") # really best to use SVG/PDF
 
 
 

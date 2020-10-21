@@ -1,5 +1,17 @@
 ## `julia` version of pRF code
 
+### Gallery
+
+<center>
+<img src="./fig-stim-image.png" width="30%"/>
+<img src="./fig-pRFimage.png" width="30%"/>
+<img src="./fig-prf-example-plot.png" width="30%"/>
+
+<img src="./fig-prf-tc+error-plot.png" width="30%"/>
+<img src="./fig-prf-tc+boot-plot.png" width="30%"/>
+
+</center>
+
 ### What you'll need
 
 - download + install `julia` (this version here made with v"julia version 1.5.0")
@@ -30,3 +42,8 @@ pboot_  # figure handle
 # and
 hm_
 ```
+
+- @todo: quick video of running `julia` code in VS code using extension.
+- @todo: add bit about command line
+- @todo: use of `BenchmarkTools.jl` for getting good timing info
+
