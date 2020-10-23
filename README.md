@@ -11,7 +11,7 @@ In short - how do you get from stimulus description and pRF (top 2 images), to a
 
 ## There is also a port to `julia`
 
-If you are interested in how this analysis can be implemented in the free and modern language `julia` (https://julialang.org/), have a look in the [subfolder of this repo](julia/Readme.md)
+If you are interested in how this analysis can be implemented in the free and modern language `julia` (https://julialang.org/), have a look in the [subfolder of this repo](julia/README.md)
 
 
 ## To get going
