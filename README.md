@@ -16,7 +16,7 @@ If you are interested in how this analysis can be implemented in the free and mo
 
 ## To get going
 
-This walk-through is written as an [live script in Matlab](https://uk.mathworks.com/help/matlab/matlab_prog/what-is-a-live-script-or-function.html),which is The Mathworks's answer to the "literate coding" idea.
+This walk-through is written as an [live script in Matlab](https://uk.mathworks.com/help/matlab/matlab_prog/what-is-a-live-script-or-function.html), which is The Mathworks's answer to the "literate coding" idea.
 
 1. ``git clone`` this repository (assuming macOS). Use Windows magic to achieve the same:
 ```bash
