@@ -9,6 +9,11 @@ In short - how do you get from stimulus description and pRF (top 2 images), to a
 <img src="./stim-image.png" width="50%"/><img src="./prf-model.png" width="50%"/><img src="./model-fit.png" width="50%"/>
 </center>
 
+## Reference
+
+[![DOI](https://zenodo.org/badge/176805932.svg)](https://zenodo.org/badge/latestdoi/176805932)
+
+
 ## There is also a port to `julia`
 
 If you are interested in how this analysis can be implemented in the free and modern language `julia` (https://julialang.org/), have a look in the [subfolder of this repo](julia/README.md)
