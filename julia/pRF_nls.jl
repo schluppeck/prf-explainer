@@ -4,6 +4,7 @@
 # also trying to establish how fast it is + how easy to extend.
 #
 # ds 2020-10
+# ds 2025-09-17 updated for Julia v"1.11.7"
 
 # dependencies
 using NIfTI, MAT 
